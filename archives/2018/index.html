@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hexo">
-    <title>Archives: 2018 - Hexo</title>
+    <title>Archiv: 2018 - Hexo</title>
     <meta name="author" content="Choi Dae Kyu">
     
     
@@ -84,11 +84,11 @@
                         <a  class="sidebar-button-link "
                              href="/all-categories"
                             
-                            title="Categories"
+                            title="Kategorien"
                         >
                     
                         <i class="sidebar-button-icon fa fa-lg fa-bookmark" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Categories</span>
+                        <span class="sidebar-button-desc">Kategorien</span>
                     </a>
             </li>
             
@@ -110,11 +110,11 @@
                         <a  class="sidebar-button-link "
                              href="/all-archives"
                             
-                            title="Archives"
+                            title="Archiv"
                         >
                     
                         <i class="sidebar-button-icon fa fa-lg fa-archive" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Archives</span>
+                        <span class="sidebar-button-desc">Archiv</span>
                     </a>
             </li>
             
@@ -123,11 +123,11 @@
                         <a  class="sidebar-button-link open-algolia-search"
                              href="#search"
                             
-                            title="Search"
+                            title="Suche"
                         >
                     
                         <i class="sidebar-button-icon fa fa-lg fa-search" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Search</span>
+                        <span class="sidebar-button-desc">Suche</span>
                     </a>
             </li>
             
@@ -136,11 +136,11 @@
                         <a  class="sidebar-button-link "
                              href="#about"
                             
-                            title="About"
+                            title="Über"
                         >
                     
                         <i class="sidebar-button-icon fa fa-lg fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">About</span>
+                        <span class="sidebar-button-desc">Über</span>
                     </a>
             </li>
             
@@ -185,6 +185,95 @@
             <div class="postShorten-header">
                 <h1 class="postShorten-title">
                     
+                        <a class="link-unstyled" href="/2018/06/05/5분 일기 개발기/">
+                            5분 일기 개발기
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2018-06-05T14:58:24+09:00">
+	
+		    05 Jun 2018
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p> <code>하루 5분 일기</code> 라는 책에서 모티브를 받아, 이번에 <a href="https://5분일기.com" target="_blank" rel="noopener">5분일기.com</a> 을 개발하였다. 구현한 기능은 사실 간단하지만, 평소 도입하고 싶었던 기술들을 새로 도입하였고, 개발하면서 많은 것들을 배우고 깨우칠 수 있었다. 앞으로 다른 프로젝트를 하여도, 바로 가져다 쓸 수 있는 토대를 마련한 기분이다. 이번 포스트는 그 배움에 대한 글이다.</p>
+<h2 id="구현한-주요-기술들"><a href="#구현한-주요-기술들" class="headerlink" title="구현한 주요 기술들"></a>구현한 주요 기술들</h2><ul>
+<li>React / NodeJS / Mongoose</li>
+<li>Redux</li>
+<li>Server Side Rendering</li>
+<li>Progressive Web Application</li>
+<li>High Order Component</li>
+<li>AWS - Serverless</li>
+<li>Styled-components</li>
+<li>Material UI</li>
+</ul>
+<h3 id="리덕스-Redux"><a href="#리덕스-Redux" class="headerlink" title="리덕스 (Redux)"></a>리덕스 (Redux)</h3><hr>
+<h4 id="connect-와-dispatch-만-사용하기"><a href="#connect-와-dispatch-만-사용하기" class="headerlink" title="connect 와 dispatch 만 사용하기"></a>connect 와 dispatch 만 사용하기</h4><p>Redux는 사용법이 복잡하다. 그런데 그렇게 복잡할 필요가 있을까라는 생각이 들었다. 그 복잡한 단계들을 모두 제거하였더니 Redux를 훨씬 효율적으로 잘 사용할 수 있게 되었다. 나는 이번 프로젝트에서 ‘액션타입’, ‘액션생성함수’ 등을 정의하지 않고, 오로지 <code>connect</code> 와 <code>dispatch</code>  만을 사용하였다. 컴포넌트를 connect 함수로 연결하면 그 컴포넌트의 props에서 dispatch를 사용할 수 있다. 비동기적인 작업이 필요할 때 쓰는 <code>redux-thunk</code> 도 쓰지 않았다. 대신 컴포넌트 안의 method에서 비동기적인 작업들을 처리하고, dispatch를 하면 됐다. </p>
+<h4 id="Redux의-initial-state-설정"><a href="#Redux의-initial-state-설정" class="headerlink" title="Redux의 initial state 설정"></a>Redux의 initial state 설정</h4><p>Redux를 사용하면서 극복해야하는 점 중 하나가 바로 초기 상태값(intial state)이다. Redux는 데이터베이스가 아니기 때문에 프로그램이 종료되면 리덕스의 데이터들은 모두 사라진다. 그리고 프로그램이 다시 시작되면 Redux는 사용자가 지정한 초기값으로 세팅된다. 이 초기값은 정말 기본적인 값으로, 사용자의 정보는 따로 데이터베이스에서 가져와 리덕스에 넣어줘야한다. 이번 프로젝트에서는 Server Side Rendering을 통해 첫 페이지가 로딩될 때, DB로부터 필요한 데이터를 불러와 Redux의 initialState를 세팅해주었다. 이로써 프로그램이 시작될때 리덕스도 그에 맞게 세팅되었다. 그 후 모든 데이터의 변경은 Redux의 dispatch를 통해 하였으며, Redux의 상태가 변할 때마다 DB와의 동기화는 asynchronous 하게 진행하였다.</p>
+<h4 id="Redux-with-Database-update"><a href="#Redux-with-Database-update" class="headerlink" title="Redux with Database update"></a>Redux with Database update</h4><p>이번 프로젝트에서는 모든 데이터를 Redux와 동기화 시켰다. 그리고 API를 통한 데이터베이스(DB)로의 접근은 최소화하였다. 만약 모든 데이터가 리덕스가 아닌 DB와 동기화되어 있다면, 데이터를 DB에서 불러오거나 DB의 데이터를 변경시킬 때 로딩시간이 필수적으로 동반된다. 하지만 리덕스와 동기화시키면 그 로딩시간이 거의 존재하지 않는다. 물론 DB와의 동기화도 필요하다. 하지만 리덕스의 State가 변할 때에 비동기적(asynchronously)으로 DB와 동기화시키면 되고, 클라이언트 입장에서는 DB와의 동기화가 모두 끝날때까지 기다릴 필요가 없다. 나는 이 방법을 <code>Redux with Database update</code> 라고 부르고 싶다. 우리는 Redux하고만 직접적으로 상호작용하고,  변화된 리덕스의 State 값은 뒤에서 자동적으로 데이터베이스에 업데이트되는 방식이다.</p>
+<hr>
+<h3 id="Mongoose-MongoDB"><a href="#Mongoose-MongoDB" class="headerlink" title="Mongoose (MongoDB)"></a>Mongoose (MongoDB)</h3><hr>
+<p>데이터베이스로는 <code>Mongoose</code> 를 사용하였다. MongoDB는 대표적인 NoSQL이다. NoSQL은 SQL보다 훨씬 유연하다. 하지만 우리는 SQL의 습성을 버리지 못해서, NoSQL인 MongoDB에서도 데이터베이스를 SQL처럼 구현한다. SQL에서는 틀을 견고하고 빈틈없이 짠 다음에, 모든 데이터를 그 틀에 맞춰 넣어야해서 그 과정이 까다롭고 복잡하다. 반면 NoSQL은 그 틀을 SQL보다 훨씬 느슨하게 짤 수 있다. 대표적인 예로, SQL은 Object 타입의 데이터를 저장할 수 없지만, NoSQL은 Object 타입의 데이터를 저장할 수 있다. 나는 이번 프로젝트에서 이 점을 적극 활용하였다.</p>
+<p>MongoDB에 Schema와 API를 복잡하게 설정하는 대신, 데이터가 변할 때마다 전체 Object 덩어리를 데이터베이스에 집어 넣었다. 예전 같았으면, 글을 삭제할때는 delete에 대한 API를 설정하고, 글을 쓸때에는 add에 대한 API를 설정했지만, 이번에는 어떤 형태의 변화가 있더라도 그것을 세분화하지 않고, 그 변화된 데이터를 포함한 전체 데이터 덩어리를 기존의 데이터 덩이리와 맞바꾸는 식으로 하였다. 그랬더니 생성 / 삭제 / 수정과 같은 데이터의 변화를 하나의 API로 모두 커버할 수 있게 되었다. </p>
+<p>그래서 데이터베이스를 구축하고 관리하는데 걸리는 시간이 대폭 절약되었고, 그 대신 리덕스을 통한 state의 관리를 꼼꼼하게 할 수 있었다. 데이터를 관리하는데 있어서 사실 Object 형태는 적합하지 않을 수 있다. Object의 깊이가 깊어질수록, 데이터는 복잡해지고, 그 관리도 어려워지기 때문이다. MongoDB 에는 깊이가 깊은 Object 덩어리를 집어넣었지만, 그 Object를 그대로 가져와서 쓰는 건 무리이다. </p>
+<p>그래서 깊이가 깊은 Object 데이터를 flat 하게 변환할 필요가 있다. <code>normalizer</code> 를 통해 그것을 구현할 수 있었다. 그래서 프로그램이 시작되는 초기에 필요한 데이터를 DB로부터 가져오면, 그 데이터를 flat하게 바꾼 후(normalize), 그 데이터들을 Redux에 넣어서 사용하였다. 그리고 Redux의 상태 변화에 따라 DB에 업데이트시킬 때에는 반대로 flat한 데이터들을 Object 형식으로 변환시킨 후(denormalize) 그 데이터를 DB에 집어넣었다.</p>
+<hr>
+<h3 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h3><hr>
+<p>아무리 많은 기능을 구현한 서비스라도 속도가 느리고, 로딩시간이 긴다면 사용자 경험 측면에서는 좋은 점수를 받을 수 없다. 그래서 Optimization은 아주 중요하다. 어떻게 하면 속도를 빠르게 할 수 있을까라는 고민을 했는데, 이 프로젝트에서는 크게 3가지를 구현하였다.</p>
+<p>먼저 첫 번째는, 위에서 설명한, Redux를 통한 상태 관리였다. 이것을 통해 사용자가 데이터를 추가하거나 변경할 때, 로딩시간이 거의 없어졌다.</p>
+<p>두 번째는 Server Side Rendering(SSR) 이다. 리액트 어플리케이션은 처음에 빈 HTML element로부터 시작된다. 흔히 <code>&lt;div id=&quot;root&quot;&gt;&lt;/div&gt;</code> 와 같은 빈 노드가 있고, 그 후 리액트의 번들링된 자바스크립트 파일이 로딩되면서, 빈 노드에 내용들이 채워진다. 따라서 페이지가 처음 로딩될때는, 아무것도 없는 빈 화면부터 시작되고, 그 후 컨텐츠가 로딩될 때까지는 일정 정도의 시간이 필요하다. SSR은 그 초기 로딩시간을 단축하기 위한 기술이다. 페이지가 처음 로딩될때, 빈 노드가 아닌 첫 화면의 컴포넌트를 미리 렌더링해주는 방식이다. Server Side Rendering은 컴포넌트 뿐만 아니라, 스타일(css) 파일도 할 수 있고, Redux state도 할 수 있다. </p>
+<p>세 번째는 Progressive Web Application 이다. PWA는 여러 기능과 많은 가능성을 가지고 있는 기술이다. 그 중 하나가 static file (js/css) 들을 캐쉬에 저장해두고, 그 후로는 그 파일들을 캐쉬로부터 불러옴으로써 로딩시간을 단축시킬 수 있다. SSR과 PWA를 통해 첫 로딩이 2~3초 걸린 것을 0.3초 대로 줄일 수 있었다.</p>
+<hr>
+<h3 id="High-Order-Component"><a href="#High-Order-Component" class="headerlink" title="High Order Component"></a>High Order Component</h3><hr>
+<p>HOC는 기술이라기 보다는 리액트의 하나의 테크닉이라고 할 수 있다. High Order Component는 컴포넌트에 특정 props를 전달해주거나, 다른 컴포넌트를 더해주거나, 아니면 다른 기능들을 추가해줄 수도 있다. HOC를 통해 컴포넌트의 코드량을 줄일 수 있고, 하나의 HOC를 여러 개의 Components에 적용할 수 있다. </p>
+<p>나는 이 프로젝트에서 10개 정도의 HOC를 만들어 사용했는데, Loader를 삽입해주는 HOC, 컴포넌트가 Mount 될 때 animation를 적용해주는 HOC, 스크린 사이즈를 컴포넌트의 props로 전달해주는 HOC 등을 만들어 사용했다. </p>
+<p>어떤 기능이든 HOC를 통해 구현할 수 있다고 생각하며, HOC를 통해 코드의 퀄리티가 높아질 수 있다고 생각한다.</p>
+<hr>
+<h3 id="Serverless"><a href="#Serverless" class="headerlink" title="Serverless"></a>Serverless</h3><hr>
+<p>개인 프로젝트를 하면서 부담되는 것 중 하나가 바로 서버 관리비이다. 나는 주로 AWS를 사용해왔는데, AWS의 EC2나, Elastic BeanStalk은 과금을 시간 단위로 책정한다. 그래서 한 달 정도 사용하면 3~4만원 정도가 과금되었다. 요금을 줄이려면 인스턴스를 중지해야하는데, 그러면 사용자가 접속할 수 없게 된다.  하지만 Serverless를 통해 한 달 요금을 3~4만원에서 1~2천원 대로 줄일 수 있었다. Serverless는 사용자가 접속하지 않을 때는 작동하지 않고, 사용자가 접속할때만 작동한다. 그래서 시간단위로 과금하지 않고,  사용자가 접속한 횟수로 과금하기 때문에, 초기 사용자가 적은 경우나 개발하고 있는 경우 유지비용을 크게 감소시킬 수 있다.</p>
+<hr>
+<h3 id="Styled-components-Material-UI"><a href="#Styled-components-Material-UI" class="headerlink" title="Styled-components / Material UI"></a>Styled-components / Material UI</h3><hr>
+<p>Styled-components는 CSS-in-JS을 구현한 것으로, 리액트에서 스타일이 적용된 컴포넌트를 바로 만들 수 있는 기술이다. 이것을 사용하면 CSS 나 SCSS 파일을 작성하지 않아도 되고, 더 나아가 class name 자체를 쓰지 않아도 된다. 그리고 결국 컴포넌트이기 때문에, props를 받을 수 있고 props의 값에 따라 style를 쉽게 바꿀 수 있는 장점이 있다.</p>
+<p>Material UI는 대표적인 React UI library인데, Material UI component를 styled-components로 받아서 새로운 스타일을 추가하거나 변경할 수 있다.</p>
+<p>이번 프로젝트에서는 사용자가 접속한 디바이스(mobile/table/desktop)에 따라, 그리고 orientation(landscape/portrait)에 따라 responsive design을 적용했는데, 이 때 CSS-in-JS 기술의 위력을 경험할 수 있었다. HOC를 통해 페이지 컴포넌트에 device와 orientation을 알려주는 props를 전달받은 다음, 그 props에 따라  styled-component에서 서로 다른 디자인을 적용하는 것이다.</p>
+<hr>
+<h3 id="코딩-공부"><a href="#코딩-공부" class="headerlink" title="코딩 공부"></a>코딩 공부</h3><hr>
+<p>나는 코딩을 공부하면서 여러 강의들을 들었지만, 가장 큰 도움이 됐던 공부 방법은 퀄리티 높은 코드를 가져와 그것을 분석하고, 그것을 바탕으로 나만의 프로젝트를 만드는 방식이었다. 이번에도 운이 좋게도 깃헙을 통해 좋은 코드를 얻을 수 있었고, 그것을 통해 많은 것들을 공부하고 깨우칠 수 있었다.</p>
+<p>이번에 내가 참고한 깃헙 리포지토리는, <a href="https://github.com/markusenglund/react-kanban" target="_blank" rel="noopener">react-kanban</a> 이었다. trello를 구현한 프로젝트였는데, 이 코드를 분석하면서 강의를 통해서는 알 수 없는 많은 것들을 배울 수 있었다. 강의는 정석적인 방법만을 알려주지만, 실제 사용하기에는 복잡하거나 그럴 수 있다. 하지만 좋은 개발자가 쓴 코드를 보면 그게 정석적인 방법은 아닐 수 있지만 훨씬 효율적이고 고급진 방법들을 배울 수 있다. 연륜이라고 할까. </p>
+<p>그런 것들을 하나씩 깨우쳐나가는 즐거움이, 그 과정의 방황과 힘듦을 상쇄시키고도 남을만큼 크기에 나도 이 공부를 계속 해나가고 있는 것 같다.</p>
+<p>이번 프로젝트를 통해 앞으로 어떤 프로젝트를 하든 가져다 쓸 수 있는 토대를 만든 것 같아 기분이 좋다. 이제 다음 프로젝트로 또 넘어가봐야겠다!</p>
+<hr>
+
+                    
+                        
+
+                    
+                    
+                        <p>
+                            <a href="/2018/06/05/5분 일기 개발기/#post-footer" class="postShorten-excerpt_link link">
+                                Kommentieren und teilen
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
                         <a class="link-unstyled" href="/2018/06/05/hello-world/">
                             Hello World
                         </a>
@@ -193,7 +282,7 @@
                 <div class="postShorten-meta">
     <time datetime="2018-06-05T11:48:04+09:00">
 	
-		    Jun 05, 2018
+		    05 Jun 2018
     	
     </time>
     
@@ -219,7 +308,7 @@
                     
                         <p>
                             <a href="/2018/06/05/hello-world/#post-footer" class="postShorten-excerpt_link link">
-                                Comment and share
+                                Kommentieren und teilen
                             </a>
                         </p>
                     
@@ -233,7 +322,7 @@
     <ul class="pagination">
         
         
-        <li class="pagination-number">page 1 of 1</li>
+        <li class="pagination-number">Seite 1 von 1</li>
     </ul>
 </div>
 
